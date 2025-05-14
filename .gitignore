@@ -1,0 +1,18 @@
+# Local data and caches
+vectorstore/
+*.db
+*.sqlite3
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+*.bin
+*.json
+# Environment variables and secrets
+.env
+secrets/
+personal_info/
+config.ini 
+
+# Virtual environments
+venv/ 

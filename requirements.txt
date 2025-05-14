@@ -1,0 +1,15 @@
+requests
+python-dotenv
+chromadb
+sentence-transformers
+wikipedia-api
+arxiv
+PyGithub
+ratelimit
+
+# For local LLM usage (optional, not used with OpenRouter)
+# torch
+# transformers 
+
+fastapi
+uvicorn[standard] 
