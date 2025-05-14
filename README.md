@@ -69,7 +69,6 @@ The `run.sh` script automates most of the setup process.
 
 2.  **API Keys:**
     *   **OpenRouter API Key (Required):** Obtain an API key from [OpenRouter.ai](https://openrouter.ai/keys).
-    *   **OpenWeather API Key (Optional):** For weather functionality, get a free API key from [OpenWeatherMap](https://openweathermap.org/api).
 
     Set them as environment variables. You can add these to your shell's profile (e.g., `~/.bashrc` or `~/.zshrc`) or a `.env` file in the project root (ensure `.env` is in your `.gitignore`).
     ```bash
