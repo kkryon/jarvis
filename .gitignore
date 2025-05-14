@@ -13,6 +13,13 @@ __pycache__/
 secrets/
 personal_info/
 config.ini 
+c/
 
 # Virtual environments
 venv/ 
+
+# Ignore .git backups
+.git_backup_*
+
+# Ignore anomalous tilde file/directory at root
+/~ 
