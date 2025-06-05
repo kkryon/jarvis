@@ -23,6 +23,7 @@ JARVIS is a multi-agent AI system designed to provide assistance through a conve
     *   Indexes `.txt` files placed in the `docs/` directory for RAG.
     *   Can recall relevant past interactions and user preferences.
 *   **Interactive CLI:** Chat with JARVIS directly through the command line using `agent.py`.
+*   **Voice Interface:** Speak to JARVIS and hear responses using `voice_agent.py`.
 *   **Web API:** Exposes certain agent functionalities via a FastAPI web interface (see `main.py`), including:
     *   General agent queries.
     *   Wikipedia and ArXiv search.
@@ -102,6 +103,18 @@ The `run.sh` script automates most of the setup process.
 ### Interactive CLI
 
 After running `./run.sh`, you can interact with JARVIS in your terminal. Type your queries and press Enter. Use "exit" or Ctrl+D to quit.
+
+### Voice Interface
+
+A simple voice interface is provided via `voice_agent.py`. It captures speech
+from your microphone, sends the transcribed text to JARVIS and reads the
+response aloud. Start it from the project root:
+
+```bash
+python voice_agent.py
+```
+
+Say "exit" to end the session.
 
 ### Web API
 

@@ -6,6 +6,9 @@ wikipedia-api
 arxiv
 PyGithub
 ratelimit
+SpeechRecognition
+pyttsx3
+pyaudio
 
 # For local LLM usage (optional, not used with OpenRouter)
 # torch
