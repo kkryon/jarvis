@@ -24,6 +24,7 @@ from agents import (
     KnowledgeToolsAgent,
     CodeDevelopmentAgent,
     DataAnalysisAgent,
+    EvaluationAgent,
     SystemEnvironmentAgent,
     ConversationMemoryAgent,
     UserPreferenceAgent,
@@ -91,7 +92,8 @@ class Orchestrator:
             "system_env": SystemEnvironmentAgent(**common_kwargs),
             "memory": ConversationMemoryAgent(**common_kwargs),
             "user_prefs": UserPreferenceAgent(**common_kwargs),
-            "data_analysis": DataAnalysisAgent(**common_kwargs), 
+            "data_analysis": DataAnalysisAgent(**common_kwargs),
+            "evaluation": EvaluationAgent(**common_kwargs),
         }
         print(f"Orchestrator: {len(self.agents)} agents registered.")
 
