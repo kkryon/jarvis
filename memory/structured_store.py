@@ -66,6 +66,26 @@ class StructuredMemory:
                     UPDATE user_preferences SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
                 END;
             """)
+
+            # Table for simple to-do tasks
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS tasks (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id TEXT NOT NULL DEFAULT 'default_user',
+                    description TEXT NOT NULL,
+                    completed INTEGER NOT NULL DEFAULT 0,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            cursor.execute("""
+                CREATE TRIGGER IF NOT EXISTS update_tasks_updated_at
+                AFTER UPDATE ON tasks
+                FOR EACH ROW
+                BEGIN
+                    UPDATE tasks SET updated_at = CURRENT_TIMESTAMP WHERE id = OLD.id;
+                END;
+            """)
             self.conn.commit()
         except sqlite3.Error as e:
             print(f"Error creating tables: {e}")
@@ -161,6 +181,73 @@ class StructuredMemory:
         except sqlite3.Error as e:
             print(f"Error retrieving all preferences for user '{user_id}': {e}")
             return None
+
+    # --- Simple To-Do Task Methods ---
+    def add_task(self, description: str, user_id: str = "default_user") -> bool:
+        if not self.conn:
+            return False
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                "INSERT INTO tasks (user_id, description, completed) VALUES (?, ?, 0)",
+                (user_id, description)
+            )
+            self.conn.commit()
+            return True
+        except sqlite3.Error as e:
+            print(f"Error adding task for user '{user_id}': {e}")
+            return False
+
+    def list_tasks(self, user_id: str = "default_user", show_completed: bool = True) -> list[dict] | None:
+        if not self.conn:
+            return None
+        try:
+            cursor = self.conn.cursor()
+            if show_completed:
+                cursor.execute(
+                    "SELECT id, description, completed FROM tasks WHERE user_id = ? ORDER BY id",
+                    (user_id,)
+                )
+            else:
+                cursor.execute(
+                    "SELECT id, description, completed FROM tasks WHERE user_id = ? AND completed = 0 ORDER BY id",
+                    (user_id,)
+                )
+            rows = cursor.fetchall()
+            return [
+                {"id": row["id"], "description": row["description"], "completed": bool(row["completed"])}
+                for row in rows
+            ]
+        except sqlite3.Error as e:
+            print(f"Error listing tasks for user '{user_id}': {e}")
+            return None
+
+    def mark_task_done(self, task_id: int, user_id: str = "default_user", completed: bool = True) -> bool:
+        if not self.conn:
+            return False
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(
+                "UPDATE tasks SET completed = ? WHERE id = ? AND user_id = ?",
+                (1 if completed else 0, task_id, user_id)
+            )
+            self.conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            print(f"Error updating task {task_id} for user '{user_id}': {e}")
+            return False
+
+    def delete_task(self, task_id: int, user_id: str = "default_user") -> bool:
+        if not self.conn:
+            return False
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute("DELETE FROM tasks WHERE id = ? AND user_id = ?", (task_id, user_id))
+            self.conn.commit()
+            return cursor.rowcount > 0
+        except sqlite3.Error as e:
+            print(f"Error deleting task {task_id} for user '{user_id}': {e}")
+            return False
 
     def close(self):
         """Closes the database connection."""

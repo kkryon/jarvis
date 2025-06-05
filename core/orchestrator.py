@@ -27,6 +27,7 @@ from agents import (
     SystemEnvironmentAgent,
     ConversationMemoryAgent,
     UserPreferenceAgent,
+    TodoAgent,
     Agent # Base Agent class
 )
 from memory.memory_manager import MemoryManager # Added import
@@ -91,7 +92,8 @@ class Orchestrator:
             "system_env": SystemEnvironmentAgent(**common_kwargs),
             "memory": ConversationMemoryAgent(**common_kwargs),
             "user_prefs": UserPreferenceAgent(**common_kwargs),
-            "data_analysis": DataAnalysisAgent(**common_kwargs), 
+            "data_analysis": DataAnalysisAgent(**common_kwargs),
+            "todo": TodoAgent(**common_kwargs),
         }
         print(f"Orchestrator: {len(self.agents)} agents registered.")
 
