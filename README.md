@@ -17,6 +17,7 @@ JARVIS is a multi-agent AI system designed to provide assistance through a conve
     *   System Environment Agent.
     *   Conversation Memory Agent.
     *   User Preference Agent.
+    *   Todo List Agent for simple task management.
 *   **Tool-Using LLM:** Allows the LLM to use tools to gather information and perform actions.
 *   **Long-Term Memory:**
     *   Utilizes ChromaDB as a vector store for semantic search over documents and past conversations.

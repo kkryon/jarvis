@@ -80,6 +80,23 @@ class MemoryManager:
         uid = user_id if user_id else self.default_user_id
         return self.structured_memory.delete_preference(key, user_id=uid)
 
+    # --- Simple To-Do Task Methods (via StructuredMemory) ---
+    def add_task(self, description: str, user_id: str | None = None) -> bool:
+        uid = user_id if user_id else self.default_user_id
+        return self.structured_memory.add_task(description, user_id=uid)
+
+    def list_tasks(self, user_id: str | None = None, show_completed: bool = True) -> list[dict] | None:
+        uid = user_id if user_id else self.default_user_id
+        return self.structured_memory.list_tasks(user_id=uid, show_completed=show_completed)
+
+    def complete_task(self, task_id: int, user_id: str | None = None, completed: bool = True) -> bool:
+        uid = user_id if user_id else self.default_user_id
+        return self.structured_memory.mark_task_done(task_id, user_id=uid, completed=completed)
+
+    def delete_task(self, task_id: int, user_id: str | None = None) -> bool:
+        uid = user_id if user_id else self.default_user_id
+        return self.structured_memory.delete_task(task_id, user_id=uid)
+
     # --- Document Knowledge Base Methods (via VectorStore) ---
     def add_document(self, doc_text: str, metadata: dict | None = None, doc_id: str | None = None) -> bool:
         """Adds a single document text to the knowledge base."""
