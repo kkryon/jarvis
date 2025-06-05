@@ -121,6 +121,20 @@ The `main.py` script defines a FastAPI application. If you want to run this sepa
     ```
     The API documentation will be available at `http://127.0.0.1:8000/docs`.
 
+### Autonomous Task Runner
+
+Use `task_runner.py` to run a list of queries without manual interaction. Tasks can be supplied with `--tasks` or a file via `--tasks-file`.
+
+Run serially (default):
+```bash
+python task_runner.py --tasks "What is the weather?" "Summarize news"
+```
+
+Run in parallel:
+```bash
+python task_runner.py --parallel --tasks-file tasks.txt --workers 4
+```
+
 ### Adding to Knowledge Base
 
 Place any `.txt` files you want JARVIS to learn from into the `docs/` directory. The system should automatically index them for retrieval when the `RAGAgent` or relevant memory functions are invoked.
